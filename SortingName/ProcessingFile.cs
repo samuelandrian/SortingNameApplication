@@ -15,6 +15,7 @@ namespace NameSorter
             this.ProcessSequentially(fileName);
         }
         private static string filePath;
+        private static string newFilePath;
         public string[] Content;
         private static string[] SortedContent = null;
         private bool isFileExist()
@@ -25,12 +26,12 @@ namespace NameSorter
         {
             filePath = Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(fileName));            
         }
-        public string[] GetContent(string fileName)
+        public string[] GetNewContent()
         {
-            SetFilePath(fileName);
+            SetNewFilePath();
             if(isFileExist())
             {
-                FileStream readerStream = new FileStream(filePath, FileMode.Open);
+                FileStream readerStream = new FileStream(newFilePath, FileMode.Open);
                 using (StreamReader reader = new StreamReader(readerStream))
                 {
                     Content = reader.ReadToEnd().Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);                    
@@ -71,9 +72,14 @@ namespace NameSorter
             foreach (var item in SortedContent)
                 Console.WriteLine(item);
         }
-        private void OverWriteFileWithSortedContent()
+        private void SetNewFilePath()
         {
-            FileStream writerStream = new FileStream(filePath, FileMode.OpenOrCreate);
+            newFilePath = Path.Combine(Directory.GetCurrentDirectory(), "sorted-names-list.txt");
+        }
+        private void WriteFileWithSortedContent()
+        {
+            SetNewFilePath();
+            FileStream writerStream = new FileStream(newFilePath, FileMode.OpenOrCreate);
             if (SortedContent != null && SortedContent.Length != 0)
             {
                 using (StreamWriter writer = new StreamWriter(writerStream))
@@ -89,7 +95,7 @@ namespace NameSorter
             {                
                 SetSortedContent();
                 WriteToConsole();
-                OverWriteFileWithSortedContent();
+                WriteFileWithSortedContent();
             }
             else
             {

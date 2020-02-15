@@ -41,7 +41,7 @@ namespace UnitTestNameSorter
 
             };
             ProcessingFile processingFile = new ProcessingFile("unsorted-names-list.txt");
-            var actual = processingFile.GetContent("unsorted-names-list.txt");
+            var actual = processingFile.GetNewContent();
             CollectionAssert.AreEqual(actual, expectedResult);
         }
         
