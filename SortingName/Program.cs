@@ -13,10 +13,7 @@ namespace NameSorter
         {
             try
             {
-                //ProcessingFile temp1 =  new ProcessingFile("unsorted-names-list.txt");
-                ProcessingFile temp1 = new ProcessingFile();
-                temp1.ProcessSequentially("unsorted-names-list.txt");
-                var a = temp1.GetNewContent();
+                new ProcessingFile(args[0]);
             }
             catch (Exception ex) { }
             Console.ReadKey();
